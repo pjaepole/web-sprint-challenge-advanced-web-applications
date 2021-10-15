@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const initialArticle = {
-    id:"",
+    // id:"",
     headline: "",
     author: "",
     summary: "",
