@@ -1,12 +1,36 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import styled from 'styled-components';
 
 const Login = () => {
-    
+    const initialLogInFormValue={
+            username:"",
+            password:"",
+            error:false
+    }
+
+    const [logInFormValue,setLogInFormValue]=useState(initialLogInFormValue)
+
+    const logInFormOnChangeHandler=(event)=>{
+        setLogInFormValue({
+            ...logInFormValue,
+            [event.target.id]:event.target.value
+        })
+    }
+
+    const logInFormSubmitHandler=(event)=>{
+        event.preventDefault()
+        console.log('clicked login button')
+    }
     return(<ComponentContainer>
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
+            <form onSubmit={logInFormSubmitHandler}>
+                <input id="username" value={logInFormValue.username} onChange={logInFormOnChangeHandler}></input>
+                <input id="password" value={logInFormValue.password} onChange={logInFormOnChangeHandler}></input>
+                <button id="submit">Log In</button>
+            </form>
+            {logInFormValue.error && <p id="error">ERROR DISPLAY</p>}
         </ModalContainer>
     </ComponentContainer>);
 }
