@@ -17,7 +17,7 @@ const Login = () => {
             ...logInFormValue,
             [event.target.name]:event.target.value
         })
-        console.log(logInFormValue)
+        
     }
 
     const logInFormSubmitHandler=(event)=>{
