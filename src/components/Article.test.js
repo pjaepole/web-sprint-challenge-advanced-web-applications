@@ -44,8 +44,14 @@ test('renders "Associated Press" when no author is given', ()=> {
     expect(defaultAuthor).toBeTruthy()
 });
 
-// test('executes handleDelete when the delete button is pressed', ()=> {
-// });
+test('executes handleDelete when the delete button is pressed', ()=> {
+    const handleDeleteMock =jest.fn();
+    render( <Article key={testArticle.id} article={testArticle} handleDelete={handleDeleteMock} />);
+    const button=screen.queryByTestId('deleteButton')
+    userEvent.click(button)
+   expect(handleDeleteMock).toBeCalled()
 
+});
+    
 //Task List:
 //1. Complete all above tests. Create test article data when needed.
