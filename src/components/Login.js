@@ -1,7 +1,9 @@
 import React,{ useState } from 'react';
 import styled from 'styled-components';
-
+import axios from 'axios'
+import { useHistory } from 'react-router';
 const Login = () => {
+    const {push}=useHistory()
     const initialLogInFormValue={
             username:"",
             password:"",
@@ -13,24 +15,38 @@ const Login = () => {
     const logInFormOnChangeHandler=(event)=>{
         setLogInFormValue({
             ...logInFormValue,
-            [event.target.id]:event.target.value
+            [event.target.name]:event.target.value
         })
+        console.log(logInFormValue)
     }
 
     const logInFormSubmitHandler=(event)=>{
         event.preventDefault()
-        console.log('clicked login button')
+        axios.post('http://localhost:5000/api/login',logInFormValue)
+        .then(response=>{
+                localStorage.setItem("token",response.data.token);
+                localStorage.setItem("role", response.data.role);
+                localStorage.setItem("username", response.data.username);
+                push("/view")
+            })
+        .catch(error=>{
+            console.log('Error from LogIn form submit',console.log(error));
+            setLogInFormValue({
+                ...logInFormValue,
+                error:true
+            })
+    })
     }
     return(<ComponentContainer>
         <ModalContainer>
             <h1>Welcome to Blogger Pro</h1>
             <h2>Please enter your account information.</h2>
             <form onSubmit={logInFormSubmitHandler}>
-                <input id="username" value={logInFormValue.username} onChange={logInFormOnChangeHandler}></input>
-                <input id="password" value={logInFormValue.password} onChange={logInFormOnChangeHandler}></input>
+                <input id="username" name="username" value={logInFormValue.username} onChange={logInFormOnChangeHandler}></input>
+                <input id="password" name="password" value={logInFormValue.password} onChange={logInFormOnChangeHandler}></input>
                 <button id="submit">Log In</button>
             </form>
-            {logInFormValue.error && <p id="error">ERROR DISPLAY</p>}
+            {logInFormValue.error && <p id="error">Please Put Correct Info</p>}
         </ModalContainer>
     </ComponentContainer>);
 }
