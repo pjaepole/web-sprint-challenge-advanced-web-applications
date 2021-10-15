@@ -5,7 +5,8 @@ import Article from './Article';
 import EditForm from './EditForm';
 import axiosWithAuth from '../utils/axiosWithAuth';
 
-const View = (props) => {
+const View = () => {
+    
     const [articles, setArticles] = useState([]);
     const [editing, setEditing] = useState(false);
     const [editId, setEditId] = useState();
@@ -45,8 +46,8 @@ const View = (props) => {
             <ArticleContainer>
                 {
                     articles.map(article => {
-                        return <ArticleDivider key={article.id}>
-                            <Article key={article.id} article={article} handleDelete={handleDelete} handleEditSelect={handleEditSelect}/>
+                        return <ArticleDivider  key={article.id}>
+                            <Article className="articless" key={article.id} article={article} handleDelete={handleDelete} handleEditSelect={handleEditSelect} />
                         </ArticleDivider>
                     })
                 }
